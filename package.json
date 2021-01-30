@@ -1,0 +1,32 @@
+{
+  "name": "pestilent-lieutenant",
+  "version": "1.0.0",
+  "description": "I'll pour this pestilence into his ear",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChingChang9/pestilent-lieutenant.git"
+  },
+  "keywords": [
+    "webhook",
+    "reddit",
+    "discord"
+  ],
+  "author": "Ching Chang",
+  "contributors": [
+    {
+      "name": "Ching Chang",
+      "email": "chingtheprogrammer@gmail.com",
+      "url": "https://www.chingchang.dev"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChingChang9/pestilent-lieutenant/issues",
+    "email": "chingtheprogrammer@gmail.com"
+  },
+  "homepage": "https://github.com/ChingChang9/pestilent-lieutenant#readme",
+  "dependencies": {
+    "snoowrap": "^1.22.0"
+  }
+}
