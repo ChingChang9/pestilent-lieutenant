@@ -1,18 +1,57 @@
-let Snoowrap = require("snoowrap");
 const https = require("https");
-const { discordWebhook } = require("./config.json");
-let { redditAuth } = require("./config.json");
+const { discordWebhook, redditAuth } = require("./config.json");
 
-const user = new Snoowrap(redditAuth).getMe();
-redditAuth = null;
-Snoowrap = null;
-delete require.cache[require.resolve("snoowrap")];
+function getLastSaved(token) {
+	return new Promise((resolve, reject) => {
+		const client = https.request(`https://oauth.reddit.com/user/${ redditAuth.username }/saved?limit=1`, {
+			method: "GET",
+			headers: {
+				"User-Agent": "Pestilent Lieutenant",
+				Authorization: `bearer ${ token }`
+			}
+		}, response => {
+			let chunks = [];
+			response.on("data", chunk => chunks.push(chunk));
+			response.on("end", () => {
+				const data = JSON.parse(Buffer.concat(chunks).toString());
+				resolve(data.data.children[0].data);
+			});
+			response.on("error", error => reject(`Error: ${ error.message }`));
+		});
+		client.end();
+	});
+}
+
+function getAccessToken() {
+	return new Promise((resolve, reject) => {
+		const client = https.request(`https://www.reddit.com/api/v1/access_token`, {
+			method: "POST",
+			headers: {
+				"User-Agent": "Pestilent Lieutenant",
+				Authorization: `Basic ${ Buffer.from(`${ redditAuth.clientId }:${ redditAuth.clientSecret }`).toString("base64") }`
+			}
+		}, response => {
+			let chunks = [];
+			response.on("data", chunk => chunks.push(chunk));
+			response.on("end", () => {
+				const data = JSON.parse(Buffer.concat(chunks).toString());
+				resolve(data.access_token);
+			});
+			response.on("error", error => reject(`Error: ${ error.message }`));
+		});
+		client.write(`grant_type=password&username=${ redditAuth.username }&password=${ redditAuth.password }`);
+		client.end();
+	});
+}
+
 
 (async () => {
-	let lastUrl = await user.getSavedContent({limit: 1})[0].url;
+	const token = await getAccessToken();
+	const lastSaved = await getLastSaved(token);
+	let lastUrl = lastSaved.url;
 
 	setInterval(async () => {
-		const newSaved = await user.getSavedContent({limit: 1})[0];
+		const newSaved = await getLastSaved(token);
 		if (lastUrl !== newSaved.url) {
 			const client = https.request(`https://discord.com/api/webhooks/${ discordWebhook.id }/${ discordWebhook.token }`, {
 				method: "POST",
@@ -38,5 +77,5 @@ delete require.cache[require.resolve("snoowrap")];
 
 			lastUrl = newSaved.url;
 		}
-	}, 10 * 1000);
+	}, 30 * 1000);
 })();

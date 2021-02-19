@@ -1,6 +1,6 @@
 {
   "name": "pestilent-lieutenant",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "I'll pour this pestilence into his ear",
   "main": "index.js",
   "repository": {
@@ -25,8 +25,5 @@
     "url": "https://github.com/ChingChang9/pestilent-lieutenant/issues",
     "email": "chingtheprogrammer@gmail.com"
   },
-  "homepage": "https://github.com/ChingChang9/pestilent-lieutenant#readme",
-  "dependencies": {
-    "snoowrap": "^1.22.0"
-  }
+  "homepage": "https://github.com/ChingChang9/pestilent-lieutenant#readme"
 }
