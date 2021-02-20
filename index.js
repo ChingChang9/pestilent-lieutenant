@@ -33,17 +33,17 @@ async function getAccessToken() {
 	const data = await request("https://www.reddit.com/api/v1/access_token", {
 		method: "POST",
 		headers: {
-			"User-Agent": "Pestilent Lieutenant",
+			"User-Agent": `node:pestilent-lieutenant${ process.pid }:1.2.2 (by /u/${ redditAuth.username })`,
 			Authorization: `Basic ${ Buffer.from(`${ redditAuth.clientId }:${ redditAuth.clientSecret }`).toString("base64") }`
 		},
-		body: `grant_type=password&username=${ redditAuth.username }&password=${ redditAuth.password }`
+		body: `grant_type=password&username=${ redditAuth.username }&password=${ redditAuth.password }&duration=permanent`
 	});
 	return data.access_token;
 }
 async function getLastSaved(token) {
 	const data = await request(`https://oauth.reddit.com/user/${ redditAuth.username }/saved?limit=1`, {
 		headers: {
-			"User-Agent": "Pestilent Lieutenant",
+			"User-Agent": `node:pestilent-lieutenant${ process.pid }:1.2.2 (by /u/${ redditAuth.username })`,
 			Authorization: `bearer ${ token }`
 		}
 	});
