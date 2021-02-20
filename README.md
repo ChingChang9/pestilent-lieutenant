@@ -47,7 +47,7 @@ Head back to the repository you cloned and create `config.json` with the followi
 Field | What it is | Example
 -|-|-
 discordWebhook.id | <span>https://</span>discord.com/api/webhooks/**this-part-of-the-url**/long-token | 199737254929760256
-discordWebhook.token | <span>https://</span>discord.com/api/webhooks/18-digit-number/**this-part-of-the-url** | 5j-0Uj72BkzYcRt1rL56wVdm7OCIixAAL-nrhLrt41QSw9yDa3jdbT8dFSZRcDjDOEEp
+discordWebhook.token | <span>https://</span>discord.com/api/webhooks/18-digit-number/**this-part-of-the-url** | 5j-0Uj72BkzYcRt1rL56wVdm7OCIixAAL-nrhLrt41QSw9yDa3jdbT8dFSiRcDjDoeEp
 redditAuth.clientId | The client ID you saved from earlier | p-jcoLKBynTLew
 redditAuth.clientSecret | The client secret you saved from earlier | gko_LXELoV07ZBNUXrvWZfzE3aI
 redditAuth.username | Your Reddit username | Choby9
