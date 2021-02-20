@@ -33,14 +33,14 @@ Head back to the repository you cloned and create `config.json` with the followi
 ```json
 {
   "discordWebhook": {
-    "id": yourWebhookId,
-    "token": yourWebhookToken
+    "id": "yourWebhookId",
+    "token": "yourWebhookToken"
   },
   "redditAuth": {
-    "clientId": yourClientId,
-    "clientSecret": yourClientSecret,
-    "username": yourRedditUsername,
-    "password": yourRedditPassword
+    "clientId": "yourClientId",
+    "clientSecret": "yourClientSecret",
+    "username": "yourRedditUsername",
+    "password": "yourRedditPassword"
   }
 }
 ```
@@ -53,7 +53,7 @@ redditAuth.clientSecret | The client secret you saved from earlier | gko_LXELoV0
 redditAuth.username | Your Reddit username | Choby9
 redditAuth.password | Your Reddit password | abcd1234
 
-After creating `config.json`, you're all set! Now go ahead and run `index.js`
+After creating `config.json`, you're all set! Now go ahead and run `index.js` with
 ```bash
 node .
 ```
