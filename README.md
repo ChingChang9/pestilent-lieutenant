@@ -1,7 +1,7 @@
 # Pestilent Lieutenant
 Receive an embedded message from Discord whenever you save something on Reddit
 
-## Install
+## Installation
 ```bash
 git clone https://github.com/ChingChang9/pestilent-lieutenant.git
 cd pestilent-Lieutenant
@@ -16,9 +16,9 @@ cd pestilent-Lieutenant
 5. (Optional) Name the bot to whatever you prefer and set an avatar
 6. Click **Copy Webhook URL** and save this link for later
 
-Step 1 and 2 | Step 3 | Step 4
+Step 1 and 2 | Step 3 | Step 4 and 5
 -|-|-
-![Discord step 1 and 2](./examples/1&2.jpg) | ![Discord step 3](./examples/3.jpg) | ![Discord step 4](./examples/4&5.jpg)
+![Discord step 1 and 2](./examples/1&2.jpg) | ![Discord step 3](./examples/3.jpg) | ![Discord step 4 and 5](./examples/4&5.jpg)
 
 #### Create a Reddit app
 1. [Create a Reddit app here](https://www.reddit.com/prefs/apps). Select "script" and put in any url and uri. It doesn't matter what you put here, as long as they are valid links
