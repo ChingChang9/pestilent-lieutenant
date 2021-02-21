@@ -7,7 +7,12 @@ module.exports = (url, { method = "GET", headers = {}, body = {} } = {}) => {
 			let chunks = [];
 			response.on("data", chunk => chunks.push(chunk));
 			response.on("end", () => {
-				if (chunks.length) resolve(JSON.parse(Buffer.concat(chunks).toString()));
+				if (!chunks.length) return resolve();
+
+				const responseBody = Buffer.concat(chunks).toString();
+				if (responseBody.startsWith("<")) return reject(new Error("Token expired"));
+
+				resolve(JSON.parse(responseBody));
 			});
 			response.on("error", error => reject(`Error: ${ error.message }`));
 		});

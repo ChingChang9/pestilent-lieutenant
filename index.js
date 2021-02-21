@@ -2,13 +2,16 @@ const request = require("./request.js");
 const { discordWebhook, redditAuth } = require("./config.json");
 
 (async () => {
-	const token = await getAccessToken();
+	let token = await getAccessToken();
 	let lastSaved = await getLastSaved(token);
 	let lastUrl = lastSaved.url;
 	lastSaved = null;
 
 	setInterval(async () => {
-		const newSaved = await getLastSaved(token);
+		const newSaved = await getLastSaved(token).catch(async error => {
+			token = await getAccessToken();
+			return await getLastSaved(token);
+		});
 		if (lastUrl !== newSaved.url) {
 			request(`https://discord.com/api/webhooks/${ discordWebhook.id }/${ discordWebhook.token }`, {
 				method: "POST",
@@ -33,19 +36,19 @@ async function getAccessToken() {
 	const data = await request("https://www.reddit.com/api/v1/access_token", {
 		method: "POST",
 		headers: {
-			"User-Agent": `node:pestilent-lieutenant${ process.pid }:1.2.2 (by /u/${ redditAuth.username })`,
+			"User-Agent": `node:pestilent-lieutenant${ process.pid }:1.2.3 (by /u/${ redditAuth.username })`,
 			Authorization: `Basic ${ Buffer.from(`${ redditAuth.clientId }:${ redditAuth.clientSecret }`).toString("base64") }`
 		},
-		body: `grant_type=password&username=${ redditAuth.username }&password=${ redditAuth.password }&duration=permanent`
+		body: `grant_type=password&username=${ redditAuth.username }&password=${ redditAuth.password }`
 	});
 	return data.access_token;
 }
 async function getLastSaved(token) {
 	const data = await request(`https://oauth.reddit.com/user/${ redditAuth.username }/saved?limit=1`, {
 		headers: {
-			"User-Agent": `node:pestilent-lieutenant${ process.pid }:1.2.2 (by /u/${ redditAuth.username })`,
+			"User-Agent": `node:pestilent-lieutenant${ process.pid }:1.2.3 (by /u/${ redditAuth.username })`,
 			Authorization: `bearer ${ token }`
 		}
-	});
-	return data.data.children[0].data;
+	}).catch(error => { throw error });
+	return data?.data.children[0].data;
 }

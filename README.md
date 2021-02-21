@@ -4,7 +4,7 @@ Receive an embedded message from Discord whenever you save something on Reddit
 ## Installation
 ```bash
 git clone https://github.com/ChingChang9/pestilent-lieutenant.git
-cd pestilent-Lieutenant
+cd pestilent-lieutenant
 ```
 
 ## How to use?
