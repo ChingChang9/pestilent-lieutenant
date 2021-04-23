@@ -21,7 +21,7 @@ Step 1 and 2 | Step 3 | Step 4 and 5
 ![Discord step 1 and 2](./examples/1&2.jpg) | ![Discord step 3](./examples/3.jpg) | ![Discord step 4 and 5](./examples/4&5.jpg)
 
 #### Create a Reddit app
-1. [Create a Reddit app here](https://www.reddit.com/prefs/apps). Select "script" and put in any url and uri. It doesn't matter what you put here, as long as they are valid links
+1. [Create a Reddit app](https://www.reddit.com/prefs/apps). Select "script" and put in any url and uri. It doesn't matter what you put here, as long as they are valid links
 2. Save your client ID and client secret on the dashboard for later
 
 Step 1 | Step 2

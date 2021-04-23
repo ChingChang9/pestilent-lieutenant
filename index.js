@@ -2,36 +2,41 @@ const request = require("./request.js");
 const { discordWebhook, redditAuth } = require("./config.json");
 
 (async () => {
-	let token = await getAccessToken();
-	let lastSaved = await getLastSaved(token);
-	let lastUrl = lastSaved.url;
-	lastSaved = null;
+	const token = await getAccessToken();
+	const lastSaved = await getLastSaved(token);
 
-	setInterval(async () => {
-		const newSaved = await getLastSaved(token).catch(async error => {
-			token = await getAccessToken();
-			return await getLastSaved(token);
-		});
-		if (lastUrl !== newSaved.url) {
-			request(`https://discord.com/api/webhooks/${ discordWebhook.id }/${ discordWebhook.token }`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: {
-					embeds: [{
-						color: 16711422,
-						author: {
-							name: newSaved.title.slice(0, 256),
-							url: `https://www.reddit.com${ newSaved.permalink }`
-						},
-						image: { url: newSaved.url }
-					}]
-				}
-			});
-			lastUrl = newSaved.url;
-		}
-	}, 30 * 1000);
+	sendLastSavedToDiscord(token, lastSaved.url, 5);
 })();
 
+async function sendLastSavedToDiscord(token, lastUrl, idleCount) {
+	const newSaved = await getLastSaved(token).catch(async () => {
+		token = await getAccessToken();
+		return await getLastSaved(token);
+	});
+	if (lastUrl !== newSaved.url) {
+		request(`https://discord.com/api/webhooks/${ discordWebhook.id }/${ discordWebhook.token }`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: {
+				embeds: [{
+					color: 16711422,
+					author: {
+						name: newSaved.title.slice(0, 256),
+						url: `https://www.reddit.com${ newSaved.permalink }`
+					},
+					image: { url: newSaved.url }
+				}]
+			}
+		});
+		idleCount = 0;
+	} else if (idleCount < 5) {
+		idleCount += 1;
+	}
+
+	setTimeout(() => {
+		sendLastSavedToDiscord(token, newSaved.url, idleCount);
+	}, idleCount === 5 ? 30000 : 4000);
+}
 async function getAccessToken() {
 	const data = await request("https://www.reddit.com/api/v1/access_token", {
 		method: "POST",
