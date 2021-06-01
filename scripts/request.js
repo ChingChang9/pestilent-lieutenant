@@ -20,4 +20,4 @@ module.exports = (url, { method = "GET", headers = {}, body = {} } = {}) => {
 		client.end();
 		client.on("error", error => reject(error));
 	});
-}
+};
